@@ -68,6 +68,13 @@ h2 {
   font-weight: 600;
 }
 
+h3 {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -101,7 +108,7 @@ main {
 }
 
 .bookings-card {
-  display: flex;
+  flex-grow: 1;
 }
 
 .bookings-list {
@@ -110,7 +117,7 @@ main {
 
 .single-booking {
   height: 90px;
-  width: 500px;
+  min-width: 500px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -152,4 +159,17 @@ main {
 .room-price {
   font-size: 20px;
   margin-right: 4px;
+}
+
+.booking-stats h2 {
+  border-bottom: 1px solid #272727;
+  padding-bottom: 16px;
+}
+
+.all-rooms-total {
+  font-size: 52px;
+}
+
+.widget {
+  margin-top: 16px;
 }
