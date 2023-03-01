@@ -6,14 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overlook</title>
 </head>
-<body>
-  <header class="dark-bg">
-    <h1 class="primary-color-text">Overlook</h1>
+<body class="light-bg">
+  <header class="light-bg">
+    <h1 class="dark-text">Overlook</h1>
+    <div class="user-info">
+      <div class="user-icon acccent-bg"></div>
+      <p>Jason Kirchman</p>
+    </div>
   </header>
-  <main>
-    <section class="new-booking-section medium-bg"></section>
-    <section class="bookings-section" id="bookingsSection"></section>
-    <aside class="booking-stats"></aside>
+  <main class="medium-bg">
+    <section class="bookings-section card" id="bookingsSection">
+      <h2>Bookings</h2>
+    </section>
+    <section class="booking-stats card">
+      <h2>Booking Data</h2>
+    </section>
   </main>
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
