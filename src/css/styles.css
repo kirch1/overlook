@@ -1,3 +1,175 @@
+* {
+  color: #272727;
+  font-family: 'Alegreya Sans', sans-serif;
+}
+
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.light-text {
+  color: #FCFAF9;
+}
+
+.primary-color-text {
+  color: #2B50AA;
+}
+
+.accent-color-text {
+  color: #F64740;
+}
+
+.light-bg {
+  background-color: #EBEBEB;
+}
+
+.dark-bg {
+  background-color: #272727;
+}
+
+.medium-bg {
+  background-color: #C0C0C0;
+}
+
+.primary-bg {
+  background-color: #2B50AA;
+}
+
+.acccent-bg {
+  background-color: #F64740;
+}
+
+.card {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 6px;
+  background-color: #EBEBEB;
+  padding: 22px;
+  min-height: 200px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 34px;
+  margin: 0;
+  height: auto;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 80px;
+  flex-grow: 0;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  z-index: 2;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+main {
+  overflow: visible;
+  display: flex;
+  gap: 2vmin;
+  flex-grow: 1;
+  padding: 3vmin;
+}
+
+.bookings-card {
+  flex-grow: 1;
+}
+
+.bookings-list {
+  margin-top: 16px;
+}
+
+.single-booking {
+  height: 90px;
+  min-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #272727;
+}
+
+.single-booking:first-child {
+  border-top: 1px solid #272727;
+}
+
+.room-number {
+  font-size: 72px;
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+.room-title {
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 4px;
+}
+
+.room-tags {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+}
+
+.room-tag {
+  background-color: #C0C0C0;
+  height: 24px;
+  border-radius: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.room-price {
+  font-size: 20px;
+  margin-right: 4px;
+}
+
+.booking-stats h2 {
+  border-bottom: 1px solid #272727;
+  padding-bottom: 16px;
+}
+
+.all-rooms-total {
+  font-size: 52px;
+}
+
+.widget {
+  margin-top: 16px;
 }
