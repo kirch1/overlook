@@ -4,25 +4,53 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;300;400;500;700;800;900&display=swap" rel="stylesheet">
   <title>Overlook</title>
 </head>
 <body class="light-bg">
   <header class="light-bg">
-    <h1 class="dark-text">Overlook</h1>
+    <h1 class=".primary-color-text">Overl👀k</h1>
     <div class="user-info">
-      <div class="user-icon acccent-bg"></div>
-      <p>Jason Kirchman</p>
+      <div class="user-icon primary-bg"></div>
+      <label>Jason Kirchman</label>
     </div>
   </header>
   <main class="medium-bg">
-    <section class="bookings-section card" id="bookingsSection">
+    <section class="bookings-card card">
       <h2>Bookings</h2>
+      <div class="bookings-list" id="bookings-list">
+        <section class="single-booking">
+          <label class="room-number">21</label>
+          <div class="room-details">
+            <label class="room-title">residential suite</label>
+            <div class="room-tags">
+              <label class="room-tag">bed size: king</label>
+              <label class="room-tag">beds: 1</label>
+              <label class="room-tag">bidet: yes</label>
+            </div>
+          </div>
+          <label class="room-price">$358.40 / night</label>
+        </section>
+        <section class="single-booking">
+          <label class="room-number">21</label>
+          <div class="room-details">
+            <label class="room-title">residential suite</label>
+            <div class="room-tags">
+              <label class="room-tag">bed size: king</label>
+              <label class="room-tag">beds: 1</label>
+              <label class="room-tag">bidet: yes</label>
+            </div>
+          </div>
+          <label class="room-price">$358.40 / night</label>
+        </section>
+      </div>
     </section>
     <section class="booking-stats card">
       <h2>Booking Data</h2>
     </section>
   </main>
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
 </body>
 </html>
