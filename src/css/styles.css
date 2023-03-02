@@ -43,17 +43,6 @@ body {
   background-color: #F64740;
 }
 
-.card {
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-radius: 6px;
-  background-color: #EBEBEB;
-  padding: 22px;
-  min-height: 200px;
-  min-width: 200px;
-  display: flex;
-  flex-direction: column;
-}
-
 h1 {
   font-size: 34px;
   margin: 0;
@@ -112,24 +101,38 @@ header {
 main {
   overflow: visible;
   display: flex;
-  gap: 2vmin;
-  flex-grow: 0;
-  padding: 3vmin;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
+  flex-grow: 1;
+  padding: 20px;
+  max-height: calc(100% - 120px);
+}
+
+.card {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 6px;
+  background-color: #EBEBEB;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
 }
 
 .bookings-card {
   flex-grow: 1;
-  max-height: 100%;
-  overflow: auto;
+  max-height: calc(100% - 40px);
 }
 
 .bookings-list {
   margin-top: 16px;
+  width: calc(100% + 8px);
+  overflow-y: auto;
+  padding-right: 8px;
 }
 
 .single-booking {
   height: 100px;
-  min-width: 500px;
+  min-width: 400px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -166,8 +169,12 @@ main {
   margin-right: 4px;
 }
 
-.booking-stats h2 {
-  border-bottom: 1px solid #272727;
+.booking-stats-card {
+  height: auto;
+}
+
+.booking-stats-card h2 {
+  border-bottom: 1px solid #2727273b;
   padding-bottom: 16px;
 }
 
@@ -177,4 +184,16 @@ main {
 
 .widget {
   margin-top: 16px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272720;
 }

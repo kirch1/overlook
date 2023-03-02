@@ -14,6 +14,13 @@ class User {
             return new Booking(booking, room);
         });
     }
+
+    getRoomTotal() {
+        return this.bookings.reduce((acc, booking) => {
+            acc += booking.room.costPerNight;
+            return acc;
+        },0).toFixed(2);
+    }
 }
 
 export {User};

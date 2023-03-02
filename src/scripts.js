@@ -25,6 +25,7 @@ const getUserData = () => {
             updateUserHeader();
             user.setBookings(data[1].bookings, data[2].rooms);
             updateBookingsList();
+            updateRoomTotal();
         });
 }
 
@@ -49,4 +50,8 @@ const updateBookingsList = () => {
                 <label class="room-price">$${booking.room.costPerNight} / night</label>
             </section>`
     })
+}
+
+const updateRoomTotal = () => {
+    roomsTotal.innerText = `$${user.getRoomTotal()}`
 }
