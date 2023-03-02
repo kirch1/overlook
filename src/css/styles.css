@@ -6,7 +6,7 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
   box-sizing: border-box;
 }
@@ -43,17 +43,6 @@ body {
   background-color: #F64740;
 }
 
-.card {
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-radius: 6px;
-  background-color: #EBEBEB;
-  padding: 22px;
-  min-height: 200px;
-  min-width: 200px;
-  display: flex;
-  flex-direction: column;
-}
-
 h1 {
   font-size: 34px;
   margin: 0;
@@ -79,9 +68,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 3vw;
+  padding-right: 3vw;
   height: 80px;
+  flex-shrink: 0;
   flex-grow: 0;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   z-index: 2;
@@ -96,59 +86,77 @@ header {
 .user-icon {
   width: 32px;
   height: 32px;
-  border-radius: 16px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-name {
+  font-size: 20px;
 }
 
 main {
   overflow: visible;
   display: flex;
-  gap: 2vmin;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
   flex-grow: 1;
-  padding: 3vmin;
+  padding: 20px;
+  max-height: calc(100% - 120px);
+}
+
+.card {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 6px;
+  background-color: #EBEBEB;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
 }
 
 .bookings-card {
   flex-grow: 1;
+  max-height: calc(100% - 40px);
 }
 
 .bookings-list {
   margin-top: 16px;
+  width: calc(100% + 8px);
+  overflow-y: auto;
+  padding-right: 8px;
 }
 
 .single-booking {
-  height: 90px;
-  min-width: 500px;
+  height: 100px;
+  min-width: 400px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #272727;
-}
-
-.single-booking:first-child {
-  border-top: 1px solid #272727;
-}
-
-.room-number {
-  font-size: 72px;
-  font-weight: bold;
-  margin-left: 4px;
+  border-top: 1px solid #2727273b;
 }
 
 .room-title {
+  text-transform:capitalize;
   font-size: 20px;
   font-weight: bold;
   padding-left: 4px;
 }
 
 .room-tags {
-  margin-top: 6px;
+  margin-top: 8px;
   display: flex;
   gap: 8px;
 }
 
 .room-tag {
   background-color: #C0C0C0;
-  height: 24px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: bold;
   border-radius: 12px;
   padding-left: 10px;
   padding-right: 10px;
@@ -161,8 +169,12 @@ main {
   margin-right: 4px;
 }
 
-.booking-stats h2 {
-  border-bottom: 1px solid #272727;
+.booking-stats-card {
+  height: auto;
+}
+
+.booking-stats-card h2 {
+  border-bottom: 1px solid #2727273b;
   padding-bottom: 16px;
 }
 
@@ -172,4 +184,16 @@ main {
 
 .widget {
   margin-top: 16px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272720;
 }
