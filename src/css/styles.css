@@ -6,7 +6,7 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
   box-sizing: border-box;
 }
@@ -82,6 +82,7 @@ header {
   padding-left: 3vw;
   padding-right: 3vw;
   height: 80px;
+  flex-shrink: 0;
   flex-grow: 0;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   z-index: 2;
@@ -94,10 +95,11 @@ header {
 }
 
 .user-icon {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 20px;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 300;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,12 +113,14 @@ main {
   overflow: visible;
   display: flex;
   gap: 2vmin;
-  flex-grow: 1;
+  flex-grow: 0;
   padding: 3vmin;
 }
 
 .bookings-card {
   flex-grow: 1;
+  max-height: 100%;
+  overflow: auto;
 }
 
 .bookings-list {
@@ -124,39 +128,30 @@ main {
 }
 
 .single-booking {
-  height: 90px;
+  height: 100px;
   min-width: 500px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #272727;
-}
-
-.single-booking:first-child {
-  border-top: 1px solid #272727;
-}
-
-.room-number {
-  font-size: 72px;
-  font-weight: bold;
-  margin-left: 4px;
+  border-top: 1px solid #2727273b;
 }
 
 .room-title {
+  text-transform:capitalize;
   font-size: 20px;
   font-weight: bold;
   padding-left: 4px;
 }
 
 .room-tags {
-  margin-top: 6px;
+  margin-top: 8px;
   display: flex;
   gap: 8px;
 }
 
 .room-tag {
   background-color: #C0C0C0;
-  height: 24px;
+  height: 20px;
   font-size: 14px;
   font-weight: bold;
   border-radius: 12px;

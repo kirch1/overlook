@@ -1,3 +1,5 @@
+import { Booking } from "./Booking";
+
 class User {
     constructor(userInfo) {
         this.id = userInfo.id;
@@ -6,12 +8,11 @@ class User {
         this.bookings = [];
     }
 
-    setBookings(bookings) {
-        if(this.isEmployee) {
-            this.bookings = bookings;
-        } else {
-            this.bookings = bookings.filter(booking => booking.userID === this.id);
-        }
+    setBookings(bookings, rooms) {
+        this.bookings = bookings.filter(booking => booking.userID === this.id).map(booking => {
+            const room = rooms.find(room => room.number === booking.roomNumber);
+            return new Booking(booking, room);
+        });
     }
 }
 
