@@ -10,15 +10,14 @@
   <title>Overlook</title>
 </head>
 <body class="light-bg">
-  <header class="light-bg">
-    <h1 class=".primary-color-text">Overl👀k</h1>
+  <header class="main-header light-bg">
+    <h1 class=".primary-color-text">Overlook</h1>
     <div class="user-info">
-      <label id="user-icon" class="user-icon primary-bg light-text">LU</label>
+      <label id="user-icon" class="user-icon accent-bg light-text">LU</label>
       <label id="user-name" class="user-name">Jason Kirchman</label>
     </div>
   </header>
   <main class="medium-bg">
-
     <section class="booking-stats-card card">
       <h2>Booking Data</h2>
       <div class="widget">
@@ -27,7 +26,14 @@
       </div>
     </section>
     <section class="bookings-card card">
-      <h2>Bookings</h2>
+      <header class="bookings-card-header">
+        <h2 id="bookings-header-text">Bookings</h2>
+        <div id="new-booking-toolbar" class="hidden">
+          <input type="text" placeholder="Select Date" id="new-booking-date">
+        </div>
+        <button class="primary-bg light-text primary-button" id="new-booking-button">New Booking</button>
+        <button class="accent-bg light-text primary-button hidden" id="new-booking-cancel">Cancel</button>
+      </header>
       <div class="bookings-list" id="bookings-list">
         <!-- ROOMS PLACEHOLDER -->
       </div>
