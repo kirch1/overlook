@@ -16,7 +16,7 @@ const newBookingButton = document.getElementById('new-booking-button');
 const newBookingCancel = document.getElementById('new-booking-cancel'); 
 const newBookingToolbar = document.getElementById('new-booking-toolbar');
 const newBookingDate = document.getElementById('new-booking-date');
-const datePicker = new Datepicker(newBookingDate, {autohide: true, format: 'yyyy/mm/dd'}); 
+new Datepicker(newBookingDate, {autohide: true, format: 'yyyy/mm/dd'}); 
 
 //DATA MODEL GLOBALS
 let user;
@@ -50,6 +50,12 @@ newBookingCancel.addEventListener('click', () => {
 newBookingDate.addEventListener('changeDate', () => {
     console.log(newBookingDate.value)
     showAvailableRooms(newBookingDate.value);
+})
+
+bookingsList.addEventListener('click', (event) => {
+    if(event.target.classList.contains('book-button')) {
+        console.log(event.target.dataset.roomnum)
+    }
 })
 
 const getUserData = () => {
@@ -110,6 +116,7 @@ const showAvailableRooms = (date) => {
                             </div>
                             <div class="room-info">
                                 <label class="room-info-text">$${room.costPerNight} / night</label>
+                                <button class="primary-bg light-text primary-button book-button" data-roomNum="${room.number}">Book Room ${String(room.number).padStart(2, '0')}</button>
                             </div>
                         </section>`
                 })
