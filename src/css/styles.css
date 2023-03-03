@@ -39,8 +39,28 @@ body {
   background-color: #2B50AA;
 }
 
-.acccent-bg {
+.accent-bg {
   background-color: #F64740;
+}
+
+.primary-button {
+  height: 28px;
+  border-radius: 14px;
+  border: none;
+  padding-left: 12px;
+  padding-right: 12px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary-button:hover {
+  opacity: 0.9;
+}
+
+.book-button {
+  font-size: 14px;
+  height: 24px;
+  border-radius: 12px;
 }
 
 h1 {
@@ -64,13 +84,13 @@ h3 {
   font-weight: 400;
 }
 
-header {
+.main-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 3vw;
-  padding-right: 3vw;
-  height: 80px;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 60px;
   flex-shrink: 0;
   flex-grow: 0;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -106,7 +126,7 @@ main {
   gap: 20px;
   flex-grow: 1;
   padding: 20px;
-  max-height: calc(100% - 120px);
+  max-height: calc(100% - 100px);
 }
 
 .card {
@@ -120,7 +140,30 @@ main {
 
 .bookings-card {
   flex-grow: 1;
-  max-height: calc(100% - 40px);
+  height: calc(100% - 40px);
+}
+
+.bookings-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bookings-header-right {
+  display: flex;
+  gap: 12px;
+}
+
+.new-booking-toolbar {
+  display: flex;
+}
+
+input {
+  font-size: 16px;
+  border-radius: 4px;
+  border-width: 1px;
+  text-align: center;
+  width: 100px;
 }
 
 .bookings-list {
@@ -128,9 +171,23 @@ main {
   width: calc(100% + 8px);
   overflow-y: auto;
   padding-right: 8px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.notify-text{
+  font-size: 24px;
+  font-weight: 100;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .single-booking {
+  flex-shrink: 0;
   height: 100px;
   min-width: 400px;
   display: flex;
@@ -164,13 +221,21 @@ main {
   align-items: center;
 }
 
-.room-price {
+.room-info {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 6px;
+}
+
+.room-info-text {
   font-size: 20px;
   margin-right: 4px;
 }
 
 .booking-stats-card {
   height: auto;
+  min-width: 300px;
 }
 
 .booking-stats-card h2 {
@@ -196,4 +261,8 @@ main {
 
 ::-webkit-scrollbar-thumb {
   background: #27272720;
+}
+
+.hidden {
+  display: none;
 }
