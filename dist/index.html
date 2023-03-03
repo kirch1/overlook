@@ -28,11 +28,13 @@
     <section class="bookings-card card">
       <header class="bookings-card-header">
         <h2 id="bookings-header-text">Bookings</h2>
-        <div id="new-booking-toolbar" class="hidden">
-          <input type="text" placeholder="Select Date" id="new-booking-date">
+        <div class="bookings-header-right">
+          <div class="new-booking-toolbar hidden" id="new-booking-toolbar">
+            <input type="text" placeholder="Select Date" id="new-booking-date">
+          </div>
+          <button class="primary-bg light-text primary-button" id="new-booking-button">New Booking</button>
+          <button class="accent-bg light-text primary-button hidden" id="new-booking-cancel">Cancel</button>
         </div>
-        <button class="primary-bg light-text primary-button" id="new-booking-button">New Booking</button>
-        <button class="accent-bg light-text primary-button hidden" id="new-booking-cancel">Cancel</button>
       </header>
       <div class="bookings-list" id="bookings-list">
         <!-- ROOMS PLACEHOLDER -->

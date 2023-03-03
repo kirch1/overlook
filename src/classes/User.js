@@ -9,12 +9,12 @@ class User {
     }
 
     setBookings(bookings, rooms) {
-        this.bookings = bookings.filter(booking => booking.userID === this.id)
-        .map(booking => {
-            const room = rooms.find(room => room.number === booking.roomNumber);
-            return new Booking(booking, room);
-        })
-        .sort((a, b) => (a.date < b.date) ? 1 : (a.date > b.date) ? -1 : 0);
+        this.bookings = bookings.map(booking => {
+                const room = rooms.find(room => room.number === booking.roomNumber);
+                return new Booking(booking, room);
+            })
+            .filter(booking => booking.userID === this.id)
+            .sort((a, b) => (a.date < b.date) ? 1 : (a.date > b.date) ? -1 : 0);
     }
 
     getRoomTotal() {

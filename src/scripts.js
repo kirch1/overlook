@@ -1,6 +1,7 @@
 import { Datepicker } from 'vanillajs-datepicker';
 import { getData } from './api';
 import { User } from './classes/User';
+import { Room } from './classes/Room';
 import './css/styles.css';
 import 'vanillajs-datepicker/css/datepicker-bulma.css';
 import './images/turing-logo.png';
@@ -29,16 +30,26 @@ newBookingButton.addEventListener('click', () => {
     show(newBookingToolbar);
     hide(newBookingButton);
     show(newBookingCancel);
+    setBookingHeader('Available Bookings');
+    bookingsList.innerHTML = '<p class="notify-text">Please select a booking date.</p>'
 });
 
 newBookingCancel.addEventListener('click', () => {
     hide(newBookingToolbar);
     show(newBookingButton);
     hide(newBookingCancel);
+    newBookingDate.value = '';
+    Promise.all([getData('bookings'), getData('rooms')])
+        .then(data => {
+            updateUserHeader();
+            user.setBookings(data[0].bookings, data[1].rooms);
+            updateBookingsList();
+        });
 });
 
-newBookingDate.addEventListener('changeDate', (event) => {
+newBookingDate.addEventListener('changeDate', () => {
     console.log(newBookingDate.value)
+    showAvailableRooms(newBookingDate.value);
 })
 
 const getUserData = () => {
@@ -72,11 +83,40 @@ const updateBookingsList = () => {
                     </div>
                 </div>
                 <div class="room-info">
-                    <label class="room-info-text">${booking.date}</label>
                     <label class="room-info-text">$${booking.room.costPerNight} / night</label>
+                    <label class="room-info-text">${booking.date}</label>
                 </div>
             </section>`
     })
+}
+
+const showAvailableRooms = (date) => {
+    Promise.all([getData('bookings'), getData('rooms')])
+        .then(data => {
+            const alreadyBooked = data[0].bookings.filter(booking => booking.date === date).map(booking => booking.roomNumber);
+            const rooms = data[1].rooms.map(room => new Room(room)).filter(room => !alreadyBooked.includes(room.number))
+            bookingsList.innerHTML = '';
+            if(rooms) {
+                rooms.forEach(room => {
+                    bookingsList.innerHTML +=
+                        `<section class="single-booking">
+                            <div class="room-details">
+                                <label class="room-title">${room.roomType} - #${String(room.number).padStart(2, '0')}</label>
+                                <div class="room-tags">
+                                    <label class="room-tag">bed size: ${room.bedSize}</label>
+                                    <label class="room-tag">beds: ${room.numBeds}</label>
+                                    <label class="room-tag">bidet: ${room.bidet ? 'yes' : 'no'}</label>
+                                </div>
+                            </div>
+                            <div class="room-info">
+                                <label class="room-info-text">$${room.costPerNight} / night</label>
+                            </div>
+                        </section>`
+                })
+            } else {
+                bookingsList.innerHTML = `<p class="notify-text">The Overlook team is very sorry, ${user.name}. No rooms match your criteria.</p>`;
+            }
+        });
 }
 
 const updateRoomTotal = () => {
