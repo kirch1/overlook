@@ -1,9 +1,9 @@
 import { Datepicker } from 'vanillajs-datepicker';
-import { getData } from './api';
+import { addBooking, getData } from './api';
 import { User } from './classes/User';
 import { Room } from './classes/Room';
 import './css/styles.css';
-import 'vanillajs-datepicker/css/datepicker-bulma.css';
+import 'vanillajs-datepicker/css/datepicker.css';
 import './images/turing-logo.png';
 
 // QUERY SELECTORS
@@ -16,9 +16,15 @@ const newBookingButton = document.getElementById('new-booking-button');
 const newBookingCancel = document.getElementById('new-booking-cancel'); 
 const newBookingToolbar = document.getElementById('new-booking-toolbar');
 const newBookingDate = document.getElementById('new-booking-date');
-new Datepicker(newBookingDate, {autohide: true, format: 'yyyy/mm/dd'}); 
+const datepicker = new Datepicker(newBookingDate, {
+    autohide: true, 
+    format: 'yyyy/mm/dd', 
+    todayButton: true,
+    todayButtonMode: 1,
+    startView: null
+});
 
-//DATA MODEL GLOBALS
+//GLOBALS
 let user;
 
 //EVENT LISTENERS
@@ -27,6 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 newBookingButton.addEventListener('click', () => {
+    clearDate();
     show(newBookingToolbar);
     hide(newBookingButton);
     show(newBookingCancel);
@@ -35,26 +42,21 @@ newBookingButton.addEventListener('click', () => {
 });
 
 newBookingCancel.addEventListener('click', () => {
-    hide(newBookingToolbar);
-    show(newBookingButton);
-    hide(newBookingCancel);
-    newBookingDate.value = '';
-    Promise.all([getData('bookings'), getData('rooms')])
-        .then(data => {
-            updateUserHeader();
-            user.setBookings(data[0].bookings, data[1].rooms);
-            updateBookingsList();
-        });
+    showBookings();
 });
 
 newBookingDate.addEventListener('changeDate', () => {
-    console.log(newBookingDate.value)
-    showAvailableRooms(newBookingDate.value);
+    if(datepicker.getDate('yyyy/mm/dd')) {
+        showAvailableRooms(datepicker.getDate('yyyy/mm/dd'));
+    }
 })
 
 bookingsList.addEventListener('click', (event) => {
     if(event.target.classList.contains('book-button')) {
-        console.log(event.target.dataset.roomnum)
+        const room = parseInt(event.target.dataset.roomnum);
+        addBooking(user.id, datepicker.getDate('yyyy/mm/dd'), room).then(() => {
+            showBookings();
+        });
     }
 })
 
@@ -73,6 +75,20 @@ const updateUserHeader = () => {
     userIcon.innerText = user.name.split(' ')[0][0] + user.name.split(' ')[1][0];
     userName.innerText = user.name;
     setBookingHeader(`${user.name.split(' ')[0]}'s Bookings`);
+}
+
+const showBookings = () => {
+    Promise.all([getData('bookings'), getData('rooms')])
+        .then(data => {
+            hide(newBookingToolbar);
+            show(newBookingButton);
+            hide(newBookingCancel);
+            clearDate();
+            setBookingHeader(`${user.name.split(' ')[0]}'s Bookings`);
+            user.setBookings(data[0].bookings, data[1].rooms);
+            updateBookingsList();
+            updateRoomTotal();
+        });
 }
 
 const updateBookingsList = () => {
@@ -102,7 +118,7 @@ const showAvailableRooms = (date) => {
             const alreadyBooked = data[0].bookings.filter(booking => booking.date === date).map(booking => booking.roomNumber);
             const rooms = data[1].rooms.map(room => new Room(room)).filter(room => !alreadyBooked.includes(room.number))
             bookingsList.innerHTML = '';
-            if(rooms) {
+            if(rooms.length) {
                 rooms.forEach(room => {
                     bookingsList.innerHTML +=
                         `<section class="single-booking">
@@ -121,7 +137,7 @@ const showAvailableRooms = (date) => {
                         </section>`
                 })
             } else {
-                bookingsList.innerHTML = `<p class="notify-text">The Overlook team is very sorry, ${user.name}. No rooms match your criteria.</p>`;
+                bookingsList.innerHTML = `<p class="notify-text">The Overlook team is very sorry, ${user.name.split(' ')[0]}.<br>No rooms match your criteria.</p>`;
             }
         });
 }
@@ -132,6 +148,10 @@ const updateRoomTotal = () => {
 
 const setBookingHeader = (text) => {
     bookingsHeaderText.innerHTML = text;
+}
+
+const clearDate = () => {
+    datepicker.setDate({clear: true});
 }
 
 const show = (element) => {

@@ -5,8 +5,20 @@ const getData = (type) => {
                     throw new Error(response);
                 }
                 return response.json();
-            })
-            .catch(error => console.log(error))
+            }).catch(error => console.log(error))
 }
 
-export {getData};
+const addBooking = (userID, date, room) => {
+    return fetch('http://localhost:3001/api/v1/bookings', {
+                method: 'POST',
+                body: JSON.stringify({userID: userID, date: date, roomNumber: room}), 
+                headers: { 'Content-Type': 'application/json'}
+            }).then(response => {
+                if(!response.ok) {
+                    throw new Error(response.status);
+                }
+                return response.json();
+            }).catch(error => console.log(error))
+}
+
+export {getData, addBooking};
