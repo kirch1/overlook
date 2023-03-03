@@ -30,7 +30,13 @@
         <h2 id="bookings-header-text">Bookings</h2>
         <div class="bookings-header-right">
           <div class="new-booking-toolbar hidden" id="new-booking-toolbar">
-            <input type="text" placeholder="Select Date" id="new-booking-date">
+            <select id="type-filter" multiple>
+              <option value="single room">single room</option>
+              <option value="junior suite">junior suite</option>
+              <option value="suite">suite</option>
+              <option value="residential suite">residential suite</option>
+            </select>
+            <input type="text" placeholder="Select Date" autocomplete="off" id="new-booking-date">
           </div>
           <button class="primary-bg light-text primary-button" id="new-booking-button">New Booking</button>
           <button class="accent-bg light-text primary-button hidden" id="new-booking-cancel">Cancel</button>
