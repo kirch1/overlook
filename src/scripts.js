@@ -4,7 +4,9 @@ import { User } from './classes/User';
 import { Room } from './classes/Room';
 import './css/styles.css';
 import 'vanillajs-datepicker/css/datepicker.css';
+import 'slim-select/dist/slimselect.css';
 import './images/turing-logo.png';
+import SlimSelect from 'slim-select'
 
 // QUERY SELECTORS
 const bookingsList = document.getElementById('bookings-list');
@@ -24,6 +26,12 @@ const datepicker = new Datepicker(newBookingDate, {
     startView: null
 });
 
+const slimselect = new SlimSelect({
+    select: '#type-filter',
+    settings: { placeholderText: 'Room Type', showSearch: false},
+    events: { afterChange: () => { typeFilterSelected() }}
+});
+
 //GLOBALS
 let user;
 
@@ -33,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 newBookingButton.addEventListener('click', () => {
-    clearDate();
+    clearFilters();
     show(newBookingToolbar);
     hide(newBookingButton);
     show(newBookingCancel);
@@ -47,7 +55,7 @@ newBookingCancel.addEventListener('click', () => {
 
 newBookingDate.addEventListener('changeDate', () => {
     if(datepicker.getDate('yyyy/mm/dd')) {
-        showAvailableRooms(datepicker.getDate('yyyy/mm/dd'));
+        showAvailableRooms(datepicker.getDate('yyyy/mm/dd'), slimselect.getSelected());
     }
 })
 
@@ -60,8 +68,13 @@ bookingsList.addEventListener('click', (event) => {
     }
 })
 
+const typeFilterSelected = () => {
+    showAvailableRooms(datepicker.getDate('yyyy/mm/dd'), slimselect.getSelected())
+}
+
+
 const getUserData = () => {
-    Promise.all([getData('customers/12'), getData('bookings'), getData('rooms')])
+    Promise.all([getData('customers/21'), getData('bookings'), getData('rooms')])
         .then(data => {
             user = new User(data[0]);
             updateUserHeader();
@@ -83,7 +96,7 @@ const showBookings = () => {
             hide(newBookingToolbar);
             show(newBookingButton);
             hide(newBookingCancel);
-            clearDate();
+            clearFilters();
             setBookingHeader(`${user.name.split(' ')[0]}'s Bookings`);
             user.setBookings(data[0].bookings, data[1].rooms);
             updateBookingsList();
@@ -109,37 +122,45 @@ const updateBookingsList = () => {
                     <label class="room-info-text">${booking.date}</label>
                 </div>
             </section>`
-    })
+    });
 }
 
-const showAvailableRooms = (date) => {
-    Promise.all([getData('bookings'), getData('rooms')])
-        .then(data => {
-            const alreadyBooked = data[0].bookings.filter(booking => booking.date === date).map(booking => booking.roomNumber);
-            const rooms = data[1].rooms.map(room => new Room(room)).filter(room => !alreadyBooked.includes(room.number))
-            bookingsList.innerHTML = '';
-            if(rooms.length) {
-                rooms.forEach(room => {
-                    bookingsList.innerHTML +=
-                        `<section class="single-booking">
-                            <div class="room-details">
-                                <label class="room-title">${room.roomType} - #${String(room.number).padStart(2, '0')}</label>
-                                <div class="room-tags">
-                                    <label class="room-tag">bed size: ${room.bedSize}</label>
-                                    <label class="room-tag">beds: ${room.numBeds}</label>
-                                    <label class="room-tag">bidet: ${room.bidet ? 'yes' : 'no'}</label>
+const showAvailableRooms = (date, types) => {
+    
+    if(date) {
+        Promise.all([getData('bookings'), getData('rooms')])
+            .then(data => {
+                const alreadyBooked = data[0].bookings.filter(booking => booking.date === date).map(booking => booking.roomNumber);
+                let rooms = data[1].rooms.map(room => new Room(room)).filter(room => !alreadyBooked.includes(room.number));
+                if(types.length) {
+                    rooms = rooms.filter(room => types.includes(room.roomType));
+                }
+                bookingsList.innerHTML = '';
+                if(rooms.length) {
+                    rooms.forEach(room => {
+                        bookingsList.innerHTML +=
+                            `<section class="single-booking">
+                                <div class="room-details">
+                                    <label class="room-title">${room.roomType} - #${String(room.number).padStart(2, '0')}</label>
+                                    <div class="room-tags">
+                                        <label class="room-tag">bed size: ${room.bedSize}</label>
+                                        <label class="room-tag">beds: ${room.numBeds}</label>
+                                        <label class="room-tag">bidet: ${room.bidet ? 'yes' : 'no'}</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="room-info">
-                                <label class="room-info-text">$${room.costPerNight} / night</label>
-                                <button class="primary-bg light-text primary-button book-button" data-roomNum="${room.number}">Book Room ${String(room.number).padStart(2, '0')}</button>
-                            </div>
-                        </section>`
-                })
-            } else {
-                bookingsList.innerHTML = `<p class="notify-text">The Overlook team is very sorry, ${user.name.split(' ')[0]}.<br>No rooms match your criteria.</p>`;
-            }
-        });
+                                <div class="room-info">
+                                    <label class="room-info-text">$${room.costPerNight} / night</label>
+                                    <button class="primary-bg light-text primary-button book-button" data-roomNum="${room.number}">Book Room ${String(room.number).padStart(2, '0')}</button>
+                                </div>
+                            </section>`
+                    })
+                } else {
+                    bookingsList.innerHTML = `<p class="notify-text">The Overlook team is very sorry, ${user.name.split(' ')[0]}.<br>No rooms match your criteria.</p>`;
+                }
+            });
+    } else {
+        bookingsList.innerHTML = '<p class="notify-text">Please select a booking date.</p>'
+    }
 }
 
 const updateRoomTotal = () => {
@@ -150,8 +171,9 @@ const setBookingHeader = (text) => {
     bookingsHeaderText.innerHTML = text;
 }
 
-const clearDate = () => {
+const clearFilters = () => {
     datepicker.setDate({clear: true});
+    slimselect.setSelected([]);
 }
 
 const show = (element) => {
