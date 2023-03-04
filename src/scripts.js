@@ -24,7 +24,7 @@ const datepicker = new Datepicker(newBookingDate, {
     todayButton: true,
     todayButtonMode: 1,
     startView: null
-});
+  });
 
 const slimselect = new SlimSelect({
     select: '#type-filter',
@@ -126,7 +126,6 @@ const updateBookingsList = () => {
 }
 
 const showAvailableRooms = (date, types) => {
-    
     if(date) {
         Promise.all([getData('bookings'), getData('rooms')])
             .then(data => {
