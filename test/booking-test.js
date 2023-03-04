@@ -4,7 +4,7 @@ import { Room } from '../src/classes/Room';
 import { bookings } from './testData/booking-data';
 import { rooms } from './testData/rooms-data';
 
-describe('Room Tests', () => {
+describe('Booking Tests', () => {
   it('Should exist and import', () => {
     assert.isFunction(Booking);
   });
@@ -16,8 +16,8 @@ describe('Room Tests', () => {
   });
 
   it('Should contain booking date', () => {
-    const booking = new Booking(bookings[4]);
-    assert.equal(booking.date, '2022/02/05');
+    const booking = new Booking(bookings[3]);
+    assert.equal(booking.date, '2022/01/10');
   });
 
   it('Should accept a Room instance', () => {

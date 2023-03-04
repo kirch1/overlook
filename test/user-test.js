@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { User } from '../src/classes/User';
 import { customers } from './testData/customer-data';
 
-describe('user Tests', () => {
+describe('User Tests', () => {
   it('Should exist and import', () => {
     assert.isFunction(User);
   });
