@@ -37,8 +37,15 @@ class Hotel {
   }
 
   getAvailableRooms(date) {
-    const alreadyBookedNums = this.bookings.filter(booking => booking.date === date).map(booking => booking.room.number);
-    return this.rooms.filter(room => !alreadyBookedNums.includes(room.number));
+    const alreadyBooked = this.bookings.filter(booking => booking.date === date).map(booking => booking.room.number);
+    return this.rooms.filter(room => !alreadyBooked.includes(room.number));
+  }
+
+  getRoomTotal() {
+    return this.getBookings().reduce((acc, booking) => {
+        acc += booking.room.costPerNight;
+        return acc;
+    },0).toFixed(2);
   }
 }
 
