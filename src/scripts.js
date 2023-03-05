@@ -1,13 +1,11 @@
 import { Datepicker } from 'vanillajs-datepicker';
-import { addBooking, getData } from './api';
-import { User } from './classes/User';
-import { Room } from './classes/Room';
-import { Hotel } from './classes/Hotel';
-import './css/styles.css';
-import 'vanillajs-datepicker/css/datepicker.css';
-import 'slim-select/dist/slimselect.css';
-import './images/turing-logo.png';
 import SlimSelect from 'slim-select'
+import { addBooking, getData } from './api';
+import { Hotel } from './classes/Hotel';
+import 'slim-select/dist/slimselect.css';
+import 'vanillajs-datepicker/css/datepicker.css';
+import './css/styles.css';
+import './images/turing-logo.png';
 
 // QUERY SELECTORS
 const bookingsList = document.getElementById('bookings-list');
@@ -22,16 +20,15 @@ const newBookingDate = document.getElementById('new-booking-date');
 const datepicker = new Datepicker(newBookingDate, {
     autohide: true, 
     format: 'yyyy/mm/dd', 
-    todayButton: true,
-    todayButtonMode: 1,
     startView: null
   });
-
 const slimselect = new SlimSelect({
     select: '#type-filter',
     settings: { placeholderText: 'Room Type', showSearch: false},
     events: { afterChange: () => { typeFilterSelected() }}
 });
+document.documentElement.style.setProperty('--ss-primary-color', '#38618C');
+document.querySelector('.ss-list').ariaLabel = "Select room type filter";
 
 //GLOBALS
 let hotel;
@@ -49,6 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 newBookingButton.addEventListener('click', () => {
     clearFilters();
+    console.log(datepicker)
     show(newBookingToolbar);
     hide(newBookingButton);
     show(newBookingCancel);
@@ -97,7 +95,6 @@ const showBookingsView = () => {
         .then(data => {
             hotel.setRooms(data[0].rooms);
             hotel.setBookings(data[1].bookings);
-            clearFilters();
             hide(newBookingToolbar);
             show(newBookingButton);
             hide(newBookingCancel);
@@ -113,16 +110,16 @@ const showBookingsList = () => {
         bookingsList.innerHTML +=
             `<section class="single-booking">
                 <div class="room-details">
-                    <label class="room-title">${booking.room.roomType} - #${String(booking.room.number).padStart(2, '0')}</label>
+                    <h3 class="room-title">${booking.room.roomType} - #${String(booking.room.number).padStart(2, '0')}</h3>
                     <div class="room-tags">
-                        <label class="room-tag">bed size: ${booking.room.bedSize}</label>
-                        <label class="room-tag">beds: ${booking.room.numBeds}</label>
-                        <label class="room-tag">bidet: ${booking.room.bidet ? 'yes' : 'no'}</label>
+                        <p class="room-tag">bed size: ${booking.room.bedSize}</p>
+                        <p class="room-tag">beds: ${booking.room.numBeds}</p>
+                        <p class="room-tag">bidet: ${booking.room.bidet ? 'yes' : 'no'}</p>
                     </div>
                 </div>
                 <div class="room-info">
-                    <label class="room-info-text">$${booking.room.costPerNight} / night</label>
-                    <label class="room-info-text">${booking.date}</label>
+                    <p class="room-info-text">$${booking.room.costPerNight} / night</p>
+                    <p class="room-info-text">${booking.date}</p>
                 </div>
             </section>`
     });
@@ -143,15 +140,15 @@ const showAvailableRooms = (date, types) => {
                   bookingsList.innerHTML +=
                       `<section class="single-booking">
                           <div class="room-details">
-                              <label class="room-title">${room.roomType} - #${String(room.number).padStart(2, '0')}</label>
+                              <h3 class="room-title">${room.roomType} - #${String(room.number).padStart(2, '0')}</h3>
                               <div class="room-tags">
-                                  <label class="room-tag">bed size: ${room.bedSize}</label>
-                                  <label class="room-tag">beds: ${room.numBeds}</label>
-                                  <label class="room-tag">bidet: ${room.bidet ? 'yes' : 'no'}</label>
+                                  <p class="room-tag">bed size: ${room.bedSize}</p>
+                                  <p class="room-tag">beds: ${room.numBeds}</p>
+                                  <p class="room-tag">bidet: ${room.bidet ? 'yes' : 'no'}</p>
                               </div>
                           </div>
                           <div class="room-info">
-                              <label class="room-info-text">$${room.costPerNight} / night</label>
+                              <p class="room-info-text">$${room.costPerNight} / night</p>
                               <button class="primary-bg light-text primary-button book-button" data-roomNum="${room.number}">Book Room ${String(room.number).padStart(2, '0')}</button>
                           </div>
                       </section>`
