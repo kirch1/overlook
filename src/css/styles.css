@@ -103,7 +103,7 @@ h3 {
   gap: 10px;
 }
 
-.user-icon {
+.logout-button {
   width: 32px;
   height: 32px;
   border-radius: 20px;
@@ -112,6 +112,13 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-style: none;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  opacity: 0.9;
+  scale: 1.1;
 }
 
 .user-name {
@@ -136,6 +143,24 @@ main {
   padding: 22px;
   display: flex;
   flex-direction: column;
+}
+
+.login {
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 10%;
+}
+
+.login-card {
+  width: 300px;
+  height: auto;
 }
 
 .bookings-card {
@@ -163,10 +188,6 @@ main {
   margin-top: 16px;
 }
 
-.test {
-  background-color: #141301;
-}
-
 input {
   font-size: 16px;
   border-radius: 4px;
@@ -175,6 +196,20 @@ input {
   border-color: #dadee1;
   text-align: center;
   width: 100px;
+}
+
+.input-error {
+  background-color: #b80c0971;
+}
+
+form input {
+  width: auto;
+  margin-bottom: 16px;
+  height: 28px;
+}
+
+form button {
+  margin-top: 10px;
 }
 
 .ss-main {
