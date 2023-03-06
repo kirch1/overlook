@@ -8,11 +8,17 @@ import './css/styles.css';
 import './images/turing-logo.png';
 
 // QUERY SELECTORS
+const mainSection = document.getElementById('main-section');
 const bookingsList = document.getElementById('bookings-list');
 const roomsTotal = document.getElementById('rooms-total'); 
-const userIcon = document.getElementById('user-icon'); 
 const userName = document.getElementById('user-name'); 
+const userInfo = document.getElementById('user-info'); 
 const bookingsHeaderText = document.getElementById('bookings-header-text'); 
+const loginSection = document.getElementById('login');
+const loginButton = document.getElementById('login-button');
+const logoutButton = document.getElementById('logout-button'); 
+const userLogin = document.getElementById('username');
+const userPass = document.getElementById('password');
 const newBookingButton = document.getElementById('new-booking-button'); 
 const newBookingCancel = document.getElementById('new-booking-cancel'); 
 const newBookingToolbar = document.getElementById('new-booking-toolbar');
@@ -34,14 +40,14 @@ document.querySelector('.ss-list').ariaLabel = "Select room type filter";
 let hotel;
 
 //EVENT LISTENERS
-window.addEventListener('DOMContentLoaded', () => {
-  Promise.all([getData('customers/22'), getData('rooms'), getData('bookings')])
-    .then(data => {
-        hotel = new Hotel(data[0], data[1].rooms, data[2].bookings);
-        updateUserHeader();
-        showBookingsList();
-        updateRoomTotal();
-    });
+loginButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const id = userLogin.value.replace('customer', '');
+  if(userLogin.value.includes('customer') && 1 <= id && id <= 50 && userPass.value === 'overlook2021') {
+    sucessfulLogin(id);
+  }else {
+    invalidCredentials();
+  }
 });
 
 newBookingButton.addEventListener('click', () => {
@@ -75,6 +81,37 @@ bookingsList.addEventListener('click', (event) => {
     }
 })
 
+logoutButton.addEventListener('click', () => {
+  hide(mainSection);
+  hide(userInfo);
+  show(loginSection);
+  hotel = null;
+});
+
+const sucessfulLogin = (id) => {
+  Promise.all([getData('customers/' + id), getData('rooms'), getData('bookings')])
+  .then(data => {
+      hotel = new Hotel(data[0], data[1].rooms, data[2].bookings);
+      updateUserHeader();
+      showBookingsList();
+      updateRoomTotal();
+      hide(loginSection);
+      userLogin.value = '';
+      userPass.value = '';
+      show(mainSection);
+      show(userInfo);
+  });
+} 
+
+const invalidCredentials = () => {
+  username.classList.add('input-error');
+  password.classList.add('input-error');
+  setTimeout(() => {
+    username.classList.remove('input-error');
+    password.classList.remove('input-error');
+  }, 600);
+}
+
 const typeFilterSelected = () => {
   if(datepicker.getDate('yyyy/mm/dd')){
     showAvailableRooms(datepicker.getDate('yyyy/mm/dd'), slimselect.getSelected())
@@ -85,7 +122,6 @@ const typeFilterSelected = () => {
 
 const updateUserHeader = () => {
     const nameSplit = hotel.currentUser.name.split(' ');
-    userIcon.innerText = nameSplit[0][0] + nameSplit[1][0];
     userName.innerText = hotel.currentUser.name;
     setBookingHeader(`${nameSplit[0]}'s Bookings`);
 }

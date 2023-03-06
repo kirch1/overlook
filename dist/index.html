@@ -7,17 +7,29 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
   <title>Overlook</title>
 </head>
 <body class="light-bg">
   <header class="main-header light-bg">
     <h1 class=".primary-color-text">Overlook</h1>
-    <div class="user-info">
-      <p id="user-icon" class="user-icon accent-bg light-text"></p>
-      <p id="user-name" class="user-name"></p>
+    <div class="user-info hidden" id="user-info">
+      <p id="user-name" class="user-name">Login</p>
+      <button id="logout-button" class="logout-button accent-bg light-text"><i class="ri-logout-box-line light-text"></i></button>
     </div>
   </header>
-  <main class="medium-bg">
+  <main class="login medium-bg" id="login">
+    <section class="login-card card">
+      <form>
+        <label for="username">Username</label>
+        <input name="username" type="text" autocomplete="off" id="username" required>
+        <label for="password">Password</label>
+        <input name="password" type="password" id="password" required>
+        <button class="primary-bg light-text primary-button" id="login-button">Login</button>
+      </form>
+    </section>
+  </main>
+  <main class="medium-bg hidden" id="main-section">
     <section class="booking-stats-card card">
       <h2>Booking Data</h2>
       <div class="widget">
