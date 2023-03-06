@@ -6,6 +6,9 @@ class User {
         this.id = userInfo.id;
         this.name = userInfo.name;
     }
+    setUserID(id) {
+      this.id = id;
+    }
 }
 
 export {User};

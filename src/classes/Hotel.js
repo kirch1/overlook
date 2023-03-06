@@ -27,10 +27,14 @@ class Hotel {
 
   setUser(user) {
     if(user === 'manager') {
-      this.currentUser = new User({id: 0, name: 'Manager'});
+      this.currentUser = new User({id: 0, name: 'Manager Dashboard'});
     }else {
       this.currentUser = new User(user);
     }
+  }
+
+  getCustomerName(id) {
+    return this.users.find(user => user.id === id).name
   }
 
   setRooms(rooms) {
@@ -46,9 +50,8 @@ class Hotel {
 
   getBookings(userFilter = true, sortDesc = true) {
     let bookingsOutput = this.bookings;
-    if(userFilter){
-      bookingsOutput = bookingsOutput.filter(booking => booking.userID === this.currentUser.id);
-    }
+    bookingsOutput = bookingsOutput.filter(booking => booking.userID === this.currentUser.id);
+
     if(sortDesc) {
       bookingsOutput = bookingsOutput.sort((a, b) => (a.date < b.date) ? 1 : (a.date > b.date) ? -1 : 0);
     }
@@ -65,6 +68,12 @@ class Hotel {
         acc += booking.room.costPerNight;
         return acc;
     },0).toFixed(2);
+  }
+
+  getTodaysRevenue() {
+    //return this.bookings.filter(booking.date === )
+    let date = new Date()
+    console.log(date.toISOString())
   }
 }
 
