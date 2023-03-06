@@ -3,15 +3,34 @@ import { Room } from "./Room";
 import { User } from "./User";
 
 class Hotel {
-  constructor(user, rooms, bookings) {
-    this.currentUser = new User(user);
+  constructor(users, rooms, bookings) {
+    this.users = users.map(user => new User(user));
+    this.currentUser = null;
     this.rooms = rooms.map(room => new Room(room));
     this.bookings;
     this.setBookings(bookings);
   }
 
+  authenticate(username, password) {
+    if(username === 'manager') {
+      return 'manager';
+    }else {
+      const id = username.replace('customer', '');
+      const availableUsers = this.users.map(user => user.id.toString());
+      if(username.includes('customer') && availableUsers.includes(id) && password === 'overlook2021') {
+        return id;
+      }else {
+        return 'invalid';
+      }
+    }
+  }
+
   setUser(user) {
-    this.currentUser = new User(user);
+    if(user === 'manager') {
+      this.currentUser = new User({id: 0, name: 'Manager'});
+    }else {
+      this.currentUser = new User(user);
+    }
   }
 
   setRooms(rooms) {

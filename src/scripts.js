@@ -11,6 +11,8 @@ import './images/turing-logo.png';
 const mainSection = document.getElementById('main-section');
 const bookingsList = document.getElementById('bookings-list');
 const roomsTotal = document.getElementById('rooms-total'); 
+const statsCustomer = document.getElementById('stats-customer'); 
+const statsManager = document.getElementById('stats-manager'); 
 const userName = document.getElementById('user-name'); 
 const userInfo = document.getElementById('user-info'); 
 const bookingsHeaderText = document.getElementById('bookings-header-text'); 
@@ -40,19 +42,25 @@ document.querySelector('.ss-list').ariaLabel = "Select room type filter";
 let hotel;
 
 //EVENT LISTENERS
+window.addEventListener('load', () => {
+  setupHotel();
+});
+
 loginButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  const id = userLogin.value.replace('customer', '');
-  if(userLogin.value.includes('customer') && 1 <= id && id <= 50 && userPass.value === 'overlook2021') {
-    sucessfulLogin(id);
-  }else {
+  event.preventDefault();  
+  const attempt = hotel.authenticate(userLogin.value, userPass.value);
+
+  if(attempt === 'invalid') {
     invalidCredentials();
+  }else if(attempt === 'manager') {
+    managerLogin();
+  }else {
+    sucessfulLogin(attempt);
   }
 });
 
 newBookingButton.addEventListener('click', () => {
     clearFilters();
-    console.log(datepicker)
     show(newBookingToolbar);
     hide(newBookingButton);
     show(newBookingCancel);
@@ -88,20 +96,41 @@ logoutButton.addEventListener('click', () => {
   hotel = null;
 });
 
+const setupHotel = () => {
+  Promise.all([getData('customers'), getData('rooms'), getData('bookings')])
+    .then(data => {
+        hotel = new Hotel(data[0].customers, data[1].rooms, data[2].bookings);
+        //sucessfulLogin(22);
+    });
+}
+
+const managerLogin = () => {
+  hotel.setUser('manager');
+  hide(loginSection);
+  userLogin.value = '';
+  userPass.value = '';
+  show(mainSection);
+  show(statsManager);
+  hide(statsCustomer);
+  hide(loginSection);
+}
+
 const sucessfulLogin = (id) => {
-  Promise.all([getData('customers/' + id), getData('rooms'), getData('bookings')])
-  .then(data => {
-      hotel = new Hotel(data[0], data[1].rooms, data[2].bookings);
-      updateUserHeader();
-      showBookingsList();
-      updateRoomTotal();
-      hide(loginSection);
-      userLogin.value = '';
-      userPass.value = '';
-      show(mainSection);
-      show(userInfo);
-  });
-} 
+  getData('customers/' + id)
+    .then(data => {
+        hotel.setUser(data);
+        updateUserHeader();
+        showBookingsList();
+        updateRoomTotal();
+        hide(loginSection);
+        userLogin.value = '';
+        userPass.value = '';
+        hide(statsManager);
+        show(statsCustomer);
+        show(mainSection);
+        show(userInfo);
+    });
+}
 
 const invalidCredentials = () => {
   username.classList.add('input-error');
@@ -128,16 +157,16 @@ const updateUserHeader = () => {
 
 const showBookingsView = () => {
     Promise.all([getData('rooms'), getData('bookings')])
-        .then(data => {
-            hotel.setRooms(data[0].rooms);
-            hotel.setBookings(data[1].bookings);
-            hide(newBookingToolbar);
-            show(newBookingButton);
-            hide(newBookingCancel);
-            setBookingHeader(`${hotel.currentUser.name.split(' ')[0]}'s Bookings`);
-            showBookingsList();
-            updateRoomTotal();
-        });
+      .then(data => {
+          hotel.setRooms(data[0].rooms);
+          hotel.setBookings(data[1].bookings);
+          hide(newBookingToolbar);
+          show(newBookingButton);
+          hide(newBookingCancel);
+          setBookingHeader(`${hotel.currentUser.name.split(' ')[0]}'s Bookings`);
+          showBookingsList();
+          updateRoomTotal();
+      });
 }
 
 const showBookingsList = () => {
@@ -163,36 +192,36 @@ const showBookingsList = () => {
 
 const showAvailableRooms = (date, types) => {
   Promise.all([getData('rooms'), getData('bookings')])
-      .then(data => {
-          hotel.setRooms(data[0].rooms);
-          hotel.setBookings(data[1].bookings);
-          let rooms = hotel.getAvailableRooms(date);
-          if(types.length) {
-              rooms = rooms.filter(room => types.includes(room.roomType));
-          }
-          bookingsList.innerHTML = '';
-          if(rooms.length) {
-              rooms.forEach(room => {
-                  bookingsList.innerHTML +=
-                      `<section class="single-booking">
-                          <div class="room-details">
-                              <h3 class="room-title">${room.roomType} - #${String(room.number).padStart(2, '0')}</h3>
-                              <div class="room-tags">
-                                  <p class="room-tag">bed size: ${room.bedSize}</p>
-                                  <p class="room-tag">beds: ${room.numBeds}</p>
-                                  <p class="room-tag">bidet: ${room.bidet ? 'yes' : 'no'}</p>
-                              </div>
-                          </div>
-                          <div class="room-info">
-                              <p class="room-info-text">$${room.costPerNight} / night</p>
-                              <button class="primary-bg light-text primary-button book-button" data-roomNum="${room.number}">Book Room ${String(room.number).padStart(2, '0')}</button>
-                          </div>
-                      </section>`
-              })
-          } else {
-              bookingsList.innerHTML = `<p class="notify-text">The Overlook team is very sorry, ${hotel.currentUser.name.split(' ')[0]}.<br>No rooms match your criteria.</p>`;
-          }
-      });
+    .then(data => {
+        hotel.setRooms(data[0].rooms);
+        hotel.setBookings(data[1].bookings);
+        let rooms = hotel.getAvailableRooms(date);
+        if(types.length) {
+            rooms = rooms.filter(room => types.includes(room.roomType));
+        }
+        bookingsList.innerHTML = '';
+        if(rooms.length) {
+            rooms.forEach(room => {
+                bookingsList.innerHTML +=
+                    `<section class="single-booking">
+                        <div class="room-details">
+                            <h3 class="room-title">${room.roomType} - #${String(room.number).padStart(2, '0')}</h3>
+                            <div class="room-tags">
+                                <p class="room-tag">bed size: ${room.bedSize}</p>
+                                <p class="room-tag">beds: ${room.numBeds}</p>
+                                <p class="room-tag">bidet: ${room.bidet ? 'yes' : 'no'}</p>
+                            </div>
+                        </div>
+                        <div class="room-info">
+                            <p class="room-info-text">$${room.costPerNight} / night</p>
+                            <button class="primary-bg light-text primary-button book-button" data-roomNum="${room.number}">Book Room ${String(room.number).padStart(2, '0')}</button>
+                        </div>
+                    </section>`
+            })
+        } else {
+            bookingsList.innerHTML = `<p class="notify-text">The Overlook team is very sorry, ${hotel.currentUser.name.split(' ')[0]}.<br>No rooms match your criteria.</p>`;
+        }
+    });
 }
 
 const updateRoomTotal = () => {

@@ -15,7 +15,7 @@
     <h1 class=".primary-color-text">Overlook</h1>
     <div class="user-info hidden" id="user-info">
       <p id="user-name" class="user-name">Login</p>
-      <button id="logout-button" class="logout-button accent-bg light-text"><i class="ri-logout-box-line light-text"></i></button>
+      <button aria-label="Logout button" id="logout-button" class="logout-button accent-bg light-text"><i class="ri-logout-box-line light-text"></i></button>
     </div>
   </header>
   <main class="login medium-bg" id="login">
@@ -30,11 +30,25 @@
     </section>
   </main>
   <main class="medium-bg hidden" id="main-section">
-    <section class="booking-stats-card card">
+    <section id="stats-customer" class="booking-stats-card card">
       <h2>Booking Data</h2>
       <div class="widget">
         <h3>All Rooms Total</h3>
         <h4 class="all-rooms-total" id="rooms-total">$0000.00</h4>
+      </div>
+    </section>
+    <section id="stats-manager" class="booking-stats-card card hidden">
+      <h2>Hotel Data</h2>
+      <div class="widget">
+        <h3>Rooms Available</h3>
+        <h4 class="all-rooms-total" id="rooms-available">21</h4>
+      <div class="widget">
+        <h3>Todays Revenue</h3>
+        <h4 class="all-rooms-total" id="todays-revenue">21</h4>
+      </div>
+      <div class="widget">
+        <h3>Occupied</h3>
+        <h4 class="all-rooms-total" id="todays-occ">21</h4>
       </div>
     </section>
     <section class="bookings-card card">
