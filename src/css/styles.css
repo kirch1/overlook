@@ -26,6 +26,19 @@ body {
   background-size: cover;
 }
 
+.all-stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 285px;
+  height: 100%;
+}
+
+.booking-table-section {
+  flex-grow: 1;
+  height: 100%;
+}
+
 .primary-button {
   height: 24px;
   border-radius: 12px;
@@ -158,25 +171,11 @@ h3 {
 main {
   overflow: visible;
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-start;
   gap: 20px;
   flex-grow: 1;
   padding: 20px;
   max-height: calc(100% - 140px);
-}
-
-.all-stats-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 300px;
-  height: 100%;
-}
-
-.booking-table-section {
-  flex-grow: 1;
-  height: 100%;
 }
 
 .login {
@@ -429,6 +428,43 @@ form button {
 
 ::-webkit-scrollbar-thumb {
   background: #4518083d;
+}
+
+@media only screen and (max-width: 820px) {
+  h1 {
+    font-size: 30px;
+  }
+
+  .card {
+    flex-grow: 1;
+  }
+
+  .login-card {
+    flex-grow: 0;
+  }
+
+  main {
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+    padding: 12px;
+  }
+  
+  .all-stats-section {
+    display: flex;
+    justify-content: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+  }
+  
+  .booking-table-section {
+    flex-grow: 1;
+    width: 100%;
+  }
 }
 
 .hidden {

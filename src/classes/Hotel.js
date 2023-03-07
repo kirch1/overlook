@@ -27,7 +27,7 @@ class Hotel {
 
   setUser(user) {
     if(user === 'manager') {
-      this.currentUser = new User({id: 0, name: 'Manager Dashboard'});
+      this.currentUser = new User({id: 0, name: 'Manager'});
     }else {
       this.currentUser = new User(user);
     }
