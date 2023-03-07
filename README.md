@@ -15,7 +15,7 @@ Customers can manage their own bookings, while managers can manage all customer 
 - Mocha / Chai
 - [vanillajs-datepicker](https://www.npmjs.com/package/vanillajs-datepicker)
 - [slim-select](https://www.npmjs.com/package/slim-select)
-- [vanillajs-datepicker](https://www.npmjs.com/package/vanillajs-datepicker)
+- [js-circle-progress](https://www.npmjs.com/package/js-circle-progress)
 ***
 
 ### Installation Instructions

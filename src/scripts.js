@@ -32,11 +32,17 @@ const newBookingCancel = document.getElementById('new-booking-cancel');
 const newBookingToolbar = document.getElementById('new-booking-toolbar');
 const newBookingDate = document.getElementById('new-booking-date');
 
-// NPM ELEMENTS
+//GLOBALS
+let hotel, manageUserID, percentFullPie;
+let manager = false;
+const today = moment().format('YYYY/MM/DD');
+
+// NPM ELEMENT SETUP
 const datepicker = new Datepicker(newBookingDate, {
     autohide: true, 
     format: 'yyyy/mm/dd', 
-    startView: null
+    startView: null,
+    minDate: today
   });
 const slimselect = new SlimSelect({
     select: '#type-filter',
@@ -49,12 +55,6 @@ const ssCustomers = new SlimSelect({
   events: { afterChange: () => managerCustomerSelected() }
 });
 setupSSColors();
-
-
-//GLOBALS
-let hotel, manageUserID, percentFullPie;
-let manager = false;
-const today = moment().format('YYYY/MM/DD');
 
 //EVENT LISTENERS
 window.addEventListener('load', () => {

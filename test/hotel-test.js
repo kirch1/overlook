@@ -8,7 +8,8 @@ import { customers } from './testData/customer-data';
 import { rooms } from './testData/rooms-data';
 
 describe('Hotel Tests', () => {
-  const hotel = new Hotel(customers[8], rooms, bookings);
+  const hotel = new Hotel(customers, rooms, bookings);
+  hotel.setUser(customers[8])
 
   it('Should exist and import', () => {
     assert.isFunction(Hotel);
@@ -41,4 +42,10 @@ describe('Hotel Tests', () => {
                         new Room(rooms[20]), new Room(rooms[21]), new Room(rooms[22]), new Room(rooms[24])]
     assert.deepEqual(hotel.getAvailableRooms('2022/01/10'), roomsArray);
   });
+
+  it('Should be able to get stats for a given day', () => {
+    const statsObj = { revenue: '4233.12', roomsAvailable: 12, roomsBooked: 13 };
+    assert.deepEqual(hotel.getStatsForDate('2022/01/10'), statsObj);
+  });
+
 });

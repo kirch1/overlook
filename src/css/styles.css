@@ -259,7 +259,7 @@ form button {
 }
 
 .datepicker-cell.focused:not(.selected) {
-  background-color: #c9c19f74;
+  background-color: #45180830;
 }
 
 .datepicker-cell.selected:hover {
@@ -276,6 +276,10 @@ form button {
 .datepicker-picker {
   color: #451808;
   background-color: #C9C19F;
+}
+
+.datepicker-cell.disabled {
+  color: #45180885;
 }
 
 .bookings-list {
