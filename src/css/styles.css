@@ -22,7 +22,7 @@ body {
   height: 100vh;
   margin: 0;
   box-sizing: border-box;
-  background: linear-gradient( #c9c19f97, #c9c19f97 ), url('https://wallpapers.com/images/hd/the-shining-carpet-print-p4ea8hy41b7gu2f7.jpg');
+  background: linear-gradient( #c9c19f97, #c9c19f97 ), url('/src/images/background.jpg');
   background-size: cover;
 }
 
