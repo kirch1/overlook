@@ -1,6 +1,14 @@
+/* light red #841a20 */
+/* dark red #451808 */
+/* orange #6d3518 */
+
 * {
-  color: #141301;
+  color: #C9C19F;
   font-family: 'Alegreya Sans', sans-serif;
+}
+
+::placeholder {
+  color: #C9C19F;
 }
 
 body {
@@ -9,38 +17,8 @@ body {
   height: 100vh;
   margin: 0;
   box-sizing: border-box;
-}
-
-.light-text {
-  color: #E5E7E6;
-}
-
-.primary-color-text {
-  color: #38618C;
-}
-
-.accent-color-text {
-  color: #B80C09;
-}
-
-.light-bg {
-  background-color: #E5E7E6;
-}
-
-.dark-bg {
-  background-color: #141301;
-}
-
-.medium-bg {
-  background-color: #B7B5B3;
-}
-
-.primary-bg {
-  background-color: #38618C;
-}
-
-.accent-bg {
-  background-color: #B80C09;
+  background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2) ), url('https://wallpapers.com/images/hd/the-shining-carpet-print-p4ea8hy41b7gu2f7.jpg');
+  background-size: cover;
 }
 
 .primary-button {
@@ -52,6 +30,17 @@ body {
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
+  background-color: #6d3518;
+}
+
+.login-button {
+  height: 36px;
+  border-radius: 18px;
+  background-color: #841a20;
+}
+
+.cancel-button {
+  background-color: #841a20;
 }
 
 .primary-button:hover {
@@ -80,7 +69,8 @@ h2 {
   font-size: 18px;
   margin: 0;
   padding: 0;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 h3 {
@@ -96,11 +86,23 @@ h3 {
   justify-content: space-between;
   padding-left: 30px;
   padding-right: 30px;
-  height: 60px;
+  height: 80px;
   flex-shrink: 0;
   flex-grow: 0;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   z-index: 2;
+  background-color: #1413018a;
+  backdrop-filter: blur(20px);
+}
+
+.card {
+  background-color: #1413018a;
+  backdrop-filter: blur(20px);
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-info {
@@ -120,6 +122,7 @@ h3 {
   justify-content: center;
   border-style: none;
   cursor: pointer;
+  background-color: #6d3518;
 }
 
 .logout-button:hover {
@@ -139,7 +142,7 @@ main {
   gap: 20px;
   flex-grow: 1;
   padding: 20px;
-  max-height: calc(100% - 100px);
+  max-height: calc(100% - 160px);
 }
 
 .all-stats-section {
@@ -150,14 +153,9 @@ main {
   height: 100%;
 }
 
-.card {
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-radius: 6px;
-  background-color: #E5E7E6;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
+.booking-table-section {
   flex-grow: 1;
+  height: 100%;
 }
 
 .login {
@@ -176,19 +174,18 @@ form {
 .login-card {
   width: 300px;
   height: auto;
-  flex-grow: 0;
 }
 
 .bookings-card {
   flex-grow: 1;
-  height: calc(100% - 30px);
+  height: 100%;
 }
 
 .bookings-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #1413013b;
+  border-bottom: 1px solid #93939375;
   padding-bottom: 8px;
 }
 
@@ -208,10 +205,10 @@ input {
   font-size: 16px;
   border-radius: 4px;
   border-width: 1px;
-  border-style: solid;
-  border-color: #dadee1;
+  border-style: none;
   text-align: center;
   width: 100px;
+  background-color: #6d3518;
 }
 
 .input-error {
@@ -229,7 +226,7 @@ h4 {
 }
 
 form button {
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
 .ss-main {
@@ -237,16 +234,28 @@ form button {
 }
 
 .datepicker-cell.selected {
-  background-color: #38618C;
+  color: #451808;
+  background-color: #C9C19F;
+}
+
+.datepicker-cell.focused:not(.selected) {
+  background-color: #c9c19f74;
 }
 
 .datepicker-cell.selected:hover {
-  background-color: #38618C;
+  color: #451808;
+  background-color: #C9C19F;
 }
 
 .datepicker-cell.prev:not(.disabled),
 .datepicker-cell.next:not(.disabled) {
-  color: hsl(0deg, 0%, 45%);
+  color: #A1A1A1;
+}
+
+.datepicker-controls .button,
+.datepicker-picker {
+  color: #C9C19F;
+  background-color: #451808;
 }
 
 .bookings-list {
@@ -270,12 +279,12 @@ form button {
 
 .single-booking {
   flex-shrink: 0;
-  height: 100px;
+  height: 80px;
   min-width: 400px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #1413013b;
+  border-top: 1px solid #93939375;
 }
 
 .single-booking:first-child {
@@ -297,7 +306,7 @@ form button {
 }
 
 .room-tag {
-  background-color: #B7B5B3;
+  background-color: #ffffff12;
   height: 20px;
   font-size: 14px;
   font-weight: bold;
@@ -322,13 +331,8 @@ form button {
   margin-right: 4px;
 }
 
-#stats-customer,
-#customer-select {
-  flex-grow: 0;
-}
-
 .all-stats-section h2 {
-  border-bottom: 1px solid #1413013b;
+  border-bottom: 1px solid #93939375;
   padding-bottom: 12px;
   margin-bottom: 12px;
 }
@@ -346,20 +350,20 @@ form button {
 }
 
 .widget-text {
-  font-size: 4pc;
+  font-size: 62px;
   margin: 0;
   text-align: center;
 }
 
 .widget-subtext {
-  font-size: 1pc;
+  font-size: 14px;
   margin: 0;
   text-align: center;
-  margin-top: -16px;
+  margin-top: -8px;
 }
 
 .widget-badge {
-  background-color: #B7B5B3;
+  margin-top: 6px;
   width: 105px;
   height: 105px;
   display: flex;
@@ -368,32 +372,34 @@ form button {
   border-radius: 60px;
   margin-bottom: 5px;
   border-style: solid;
-  border-width: 3px;
-  border-color: white;
+  border-width: 2px;
+  border-color: C9C19F;
 }
 
 .circle-progress {
+  margin-top: 6px;
   width: 110px;
   height: 110px;
 }
 
 .circle-progress-value {
-	stroke-width: 8px;
-	stroke: white;
+	stroke-width: 5px;
+	stroke: #451808;
 	stroke-linecap: round;
 }
 
 .circle-progress-circle {
-	stroke-width: 12px;
-	stroke: #B7B5B3;
+	stroke-width: 8px;
+	stroke: #C9C19F;
 }
 
 .circle-progress-text {
-	fill: #141301;
+	fill: #C9C19F;
+  font-size: 28px;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -401,7 +407,7 @@ form button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #14130120;
+  background: #c9c19fa2;
 }
 
 .hidden {

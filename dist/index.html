@@ -10,26 +10,26 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
   <title>Overlook</title>
 </head>
-<body class="light-bg">
-  <header class="main-header light-bg">
-    <h1 class=".primary-color-text">Overlook</h1>
+<body>
+  <header class="main-header">
+    <h1 class="logo">Overlook Hotel</h1>
     <div class="user-info hidden" id="user-info">
       <p id="user-name" class="user-name">Login</p>
-      <button aria-label="Logout button" id="logout-button" class="logout-button accent-bg light-text"><i class="ri-logout-box-line light-text"></i></button>
+      <button aria-label="Logout button" id="logout-button" class="logout-button"><i class="ri-logout-box-line"></i></button>
     </div>
   </header>
-  <main class="login medium-bg" id="login">
+  <main class="login" id="login">
     <section class="card login-card">
       <form>
         <label for="username">Username</label>
         <input name="username" type="text" autocomplete="off" id="username" required>
         <label for="password">Password</label>
         <input name="password" type="password" id="password" required>
-        <button class="primary-bg light-text primary-button" id="login-button">Login</button>
+        <button class="primary-button login-button" id="login-button">Login</button>
       </form>
     </section>
   </main>
-  <main class="medium-bg hidden" id="main-section">
+  <main class="hidden" id="main-section">
     <section class="all-stats-section hidden" id="customer-stats-section">
       <section id="stats-customer" class="card">
         <h2>Rooms Total</h2>
@@ -58,30 +58,32 @@
             <p class="widget-text" id="rooms-available"></p>
             <p class="widget-subtext">AVAILABLE</p>
           </div>
-          <div class="percent-full-pie"></div>
+          <div aria-label="Percent booked" class="percent-full-pie"></div>
         </div>
       </section>
     </section>
-    <section class="bookings-card card">
-      <header class="bookings-card-header">
-        <h2 id="bookings-header-text">Bookings</h2>
-        <div class="bookings-header-right">
-          <button tabindex="0" class="primary-bg light-text primary-button" id="new-booking-button">New Booking</button>
-          <button class="accent-bg light-text primary-button hidden" id="new-booking-cancel">Cancel</button>
+    <section class="booking-table-section">
+      <section class="bookings-card card">
+        <header class="bookings-card-header">
+          <h2 id="bookings-header-text">Bookings</h2>
+          <div class="bookings-header-right">
+            <button tabindex="0" class="primary-button" id="new-booking-button">New Booking</button>
+            <button class="primary-button cancel-button hidden" id="new-booking-cancel">Cancel</button>
+          </div>
+        </header>
+        <div class="new-booking-toolbar hidden" id="new-booking-toolbar">
+          <input tabindex="0" type="text" aria-label="Select booking date" placeholder="Select Date" autocomplete="off" id="new-booking-date">
+          <select tabindex="0" aria-label="Select room type" id="type-filter" multiple>
+            <option value="single room">single room</option>
+            <option value="junior suite">junior suite</option>
+            <option value="suite">suite</option>
+            <option value="residential suite">residential suite</option>
+          </select>
         </div>
-      </header>
-      <div class="new-booking-toolbar hidden" id="new-booking-toolbar">
-        <input tabindex="0" type="text" aria-label="Select booking date" placeholder="Select Date" autocomplete="off" id="new-booking-date">
-        <select tabindex="0" aria-label="Select room type" id="type-filter" multiple>
-          <option value="single room">single room</option>
-          <option value="junior suite">junior suite</option>
-          <option value="suite">suite</option>
-          <option value="residential suite">residential suite</option>
-        </select>
-      </div>
-      <div class="bookings-list" id="bookings-list">
-        <!-- ROOMS PLACEHOLDER -->
-      </div>
+        <div class="bookings-list" id="bookings-list">
+          <!-- ROOMS PLACEHOLDER -->
+        </div>
+      </section>
     </section>
   </main>
   <script src="bundle.js"></script>
