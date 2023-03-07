@@ -120,7 +120,7 @@ const setupHotel = () => {
   Promise.all([getData('customers'), getData('rooms'), getData('bookings')])
     .then(data => {
       hotel = new Hotel(data[0].customers, data[1].rooms, data[2].bookings);
-      managerLogin();
+      //managerLogin();
       //sucessfulLogin(22);
     });
 }

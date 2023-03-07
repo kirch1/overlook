@@ -38,7 +38,6 @@ describe('Hotel Tests', () => {
   it('Should be able to get array of available Rooms given a date', () => {
     const roomsArray = [new Room(rooms[0]), new Room(rooms[2]), new Room(rooms[3]), new Room(rooms[5]),
                         new Room(rooms[9]), new Room(rooms[10]), new Room(rooms[15]), new Room(rooms[17]),
-                        
                         new Room(rooms[20]), new Room(rooms[21]), new Room(rooms[22]), new Room(rooms[24])]
     assert.deepEqual(hotel.getAvailableRooms('2022/01/10'), roomsArray);
   });
