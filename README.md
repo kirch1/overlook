@@ -1,6 +1,6 @@
 # Overlook Hotel Dashboard
 
-Overlook is a customer/manager dashboard used to view, create, and delete bookings for a stay at the Overlook hotel.
+Overlook is a customer/manager dashboard used to view, create, and delete bookings for a stay at The Overlook Hotel.
 Customers can manage their own bookings, while managers can manage all customer bookings as well as view booking stats for the current day.
 ***
 
