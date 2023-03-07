@@ -5,12 +5,9 @@ class User {
     constructor(userInfo) {
         this.id = userInfo.id;
         this.name = userInfo.name;
-        this.isEmployee = false;
-        this.bookings = [];
     }
-
-    setEmployee(val) {
-      this.isEmployee = val;
+    setUserID(id) {
+      this.id = id;
     }
 }
 

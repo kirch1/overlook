@@ -15,11 +15,11 @@
     <h1 class=".primary-color-text">Overlook</h1>
     <div class="user-info hidden" id="user-info">
       <p id="user-name" class="user-name">Login</p>
-      <button id="logout-button" class="logout-button accent-bg light-text"><i class="ri-logout-box-line light-text"></i></button>
+      <button aria-label="Logout button" id="logout-button" class="logout-button accent-bg light-text"><i class="ri-logout-box-line light-text"></i></button>
     </div>
   </header>
   <main class="login medium-bg" id="login">
-    <section class="login-card card">
+    <section class="card login-card">
       <form>
         <label for="username">Username</label>
         <input name="username" type="text" autocomplete="off" id="username" required>
@@ -30,12 +30,37 @@
     </section>
   </main>
   <main class="medium-bg hidden" id="main-section">
-    <section class="booking-stats-card card">
-      <h2>Booking Data</h2>
-      <div class="widget">
-        <h3>All Rooms Total</h3>
-        <h4 class="all-rooms-total" id="rooms-total">$0000.00</h4>
-      </div>
+    <section class="all-stats-section hidden" id="customer-stats-section">
+      <section id="stats-customer" class="card">
+        <h2>Rooms Total</h2>
+        <div class="widget">
+          <h4 class="all-rooms-total" id="rooms-total">$0000.00</h4>
+        </div>
+      </section>
+    </section>
+    <section class="all-stats-section hidden" id="manager-stats-section">
+      <section id="customer-select" class="card">
+        <h2>Customer Lookup</h2>
+        <select tabindex="0" aria-label="Select customer to manage" id="customer-search-select">
+          <option data-placeholder="true"></option>
+        </select>
+      </section>
+      <section class="card">
+        <h2>Today's Revenue</h2>
+          <div class="widget">
+            <p class="widget-text" id="todays-revenue"></p>
+          </div>
+      </section>
+      <section class="card">
+        <h2>Today's Bookings</h2>
+        <div class="widget">
+          <div class="widget-badge">
+            <p class="widget-text" id="rooms-available"></p>
+            <p class="widget-subtext">AVAILABLE</p>
+          </div>
+          <div class="percent-full-pie"></div>
+        </div>
+      </section>
     </section>
     <section class="bookings-card card">
       <header class="bookings-card-header">

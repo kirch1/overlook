@@ -13,10 +13,4 @@ describe('User Tests', () => {
     assert.equal(user.name, 'Leatha Ullrich');
   });
 
-  it('Should be able to flag user as hotel employee', () => {
-    const user = new User(customers[0]);
-    user.setEmployee(true);
-    assert.equal(user.isEmployee, true);
-  });
-
 });
