@@ -2,7 +2,7 @@ import { Datepicker } from 'vanillajs-datepicker';
 import SlimSelect from 'slim-select';
 import CircleProgress from 'js-circle-progress';
 import moment from 'moment';
-import { addBooking, getData } from './api';
+import { addBooking, deleteBooking, getData } from './api';
 import { Hotel } from './classes/Hotel';
 import 'slim-select/dist/slimselect.css';
 import 'vanillajs-datepicker/css/datepicker.css';
@@ -54,6 +54,7 @@ setupSSColors();
 //GLOBALS
 let hotel, manageUserID, percentFullPie;
 let manager = false;
+const today = moment().format('YYYY/MM/DD');
 
 //EVENT LISTENERS
 window.addEventListener('load', () => {
@@ -98,6 +99,11 @@ bookingsList.addEventListener('click', (event) => {
   if(event.target.classList.contains('book-button')) {
     const room = parseInt(event.target.dataset.roomnum);
     addBooking(hotel.currentUser.id, datepicker.getDate('yyyy/mm/dd'), room).then(() => {
+      showBookingsView();
+    });
+  }
+  if(event.target.classList.contains('delete-button') || event.target.classList.contains('ri-delete-bin-line')) {
+    deleteBooking(event.target.dataset.bookingid).then(() => {
       showBookingsView();
     });
   }
@@ -214,10 +220,14 @@ const showBookingsList = () => {
         </div>
         <div class="room-info">
           <p class="room-info-text">$${booking.room.costPerNight} / night</p>
-          <p class="room-info-text">${booking.date}</p>
+          <p class="room-info-text">${booking.date} ${ manager && booking.date >= today ? getDeleteButton(booking.id) : ''} </p>
         </div>
       </section>`
   });
+}
+
+function getDeleteButton(bookingID) {
+  return `<button aria-label="Delete booking button" data-bookingID="${bookingID}" class="delete-button"><i data-bookingID="${bookingID}" class="ri-delete-bin-line"></i></button>`
 }
 
 const showAvailableRooms = (date, types) => {
@@ -244,7 +254,7 @@ const showAvailableRooms = (date, types) => {
               </div>
               <div class="room-info">
                 <p class="room-info-text">$${room.costPerNight} / night</p>
-                <button class="primary-bg light-text primary-button book-button" data-roomNum="${room.number}">Book Room ${String(room.number).padStart(2, '0')}</button>
+                <button class="primary-button book-button" data-roomNum="${room.number}">Book Room ${String(room.number).padStart(2, '0')}</button>
               </div>
             </section>`
         })
@@ -282,10 +292,10 @@ const populateCustomerSearch = () => {
 }
 
 const updateManagerStats = () => {
-  const today = hotel.getStatsForDate(moment().format('YYYY/MM/DD'));
-  percentFullPie.value = today.roomsBooked;
-  todaysRevenue.innerText = `$${today.revenue}`;
-  roomsAvailable.innerText = today.roomsAvailable;
+  const todayStats = hotel.getStatsForDate(today)
+  percentFullPie.value = todayStats.roomsBooked;
+  todaysRevenue.innerText = `$${todayStats.revenue}`;
+  roomsAvailable.innerText = todayStats.roomsAvailable;
 }
 
 const show = (element) => {
