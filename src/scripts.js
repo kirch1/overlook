@@ -8,6 +8,7 @@ import 'slim-select/dist/slimselect.css';
 import 'vanillajs-datepicker/css/datepicker.css';
 import './css/styles.css';
 import './images/turing-logo.png';
+import './images/background.jpg';
 
 // QUERY SELECTORS
 const mainSection = document.getElementById('main-section');
@@ -42,12 +43,16 @@ const slimselect = new SlimSelect({
     settings: { placeholderText: 'Room Type', showSearch: false, allowDeselect: true},
     events: { afterChange: () => typeFilterSelected() }
 });
+const ssCustomers = new SlimSelect({
+  select: '#customer-search-select',
+  settings: { placeholderText: 'Select Customer'},
+  events: { afterChange: () => managerCustomerSelected() }
+});
+setupSSColors();
 
-document.documentElement.style.setProperty('--ss-primary-color', '#38618C');
-document.querySelector('.ss-list').ariaLabel = "Select room type filter";
 
 //GLOBALS
-let hotel, ssCustomers, manageUserID, percentFullPie;
+let hotel, manageUserID, percentFullPie;
 let manager = false;
 
 //EVENT LISTENERS
@@ -272,12 +277,7 @@ const clearFilters = () => {
 }
 
 const populateCustomerSearch = () => {
-  ssCustomers = new SlimSelect({
-    select: '#customer-search-select',
-    settings: { placeholderText: 'Select Customer'},
-    events: { afterChange: managerCustomerSelected },
-    data: hotel.users.map(user => ({text: user.name, value: user.id}))
-  });
+  ssCustomers.setData(hotel.users.map(user => ({text: user.name, value: user.id})));
 }
 
 const updateManagerStats = () => {
@@ -293,4 +293,15 @@ const show = (element) => {
 
 const hide = (element) => {
   element.classList.add('hidden');
+}
+
+function setupSSColors() {
+  document.documentElement.style.setProperty('--ss-primary-color', '#C9C19F');
+  document.documentElement.style.setProperty('--ss-bg-color', '#6d3518');
+  document.documentElement.style.setProperty('--ss-font-color', '#C9C19F');
+  document.documentElement.style.setProperty('--ss-font-placeholder-color', '#C9C19F');
+  document.documentElement.style.setProperty('--ss-border-color', 'transparent');
+  document.documentElement.style.setProperty('--ss-disabled-color', '#C9C19F99');
+  document.querySelectorAll('.ss-list')[0].ariaLabel = "Select room type filter";
+  document.querySelectorAll('.ss-list')[1].ariaLabel = "Select user";
 }
