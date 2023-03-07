@@ -1,5 +1,7 @@
 import { Datepicker } from 'vanillajs-datepicker';
-import SlimSelect from 'slim-select'
+import SlimSelect from 'slim-select';
+import CircleProgress from 'js-circle-progress';
+import moment from 'moment';
 import { addBooking, getData } from './api';
 import { Hotel } from './classes/Hotel';
 import 'slim-select/dist/slimselect.css';
@@ -11,8 +13,10 @@ import './images/turing-logo.png';
 const mainSection = document.getElementById('main-section');
 const bookingsList = document.getElementById('bookings-list');
 const roomsTotal = document.getElementById('rooms-total'); 
-const statsCustomer = document.getElementById('stats-customer'); 
-const statsManager = document.getElementById('stats-manager'); 
+const customerStatsSection = document.getElementById('customer-stats-section'); 
+const managerStatsSection = document.getElementById('manager-stats-section'); 
+const todaysRevenue = document.getElementById('todays-revenue'); 
+const roomsAvailable = document.getElementById('rooms-available'); 
 const customerSelection = document.getElementById('customer-select'); 
 const userName = document.getElementById('user-name'); 
 const userInfo = document.getElementById('user-info'); 
@@ -27,7 +31,7 @@ const newBookingCancel = document.getElementById('new-booking-cancel');
 const newBookingToolbar = document.getElementById('new-booking-toolbar');
 const newBookingDate = document.getElementById('new-booking-date');
 
-// DATEPICKER AND SLIM SELECT
+// NPM ELEMENTS
 const datepicker = new Datepicker(newBookingDate, {
     autohide: true, 
     format: 'yyyy/mm/dd', 
@@ -43,7 +47,7 @@ document.documentElement.style.setProperty('--ss-primary-color', '#38618C');
 document.querySelector('.ss-list').ariaLabel = "Select room type filter";
 
 //GLOBALS
-let hotel, ssCustomers, manageUserID;
+let hotel, ssCustomers, manageUserID, percentFullPie;
 let manager = false;
 
 //EVENT LISTENERS
@@ -86,27 +90,27 @@ newBookingDate.addEventListener('changeDate', () => {
 })
 
 bookingsList.addEventListener('click', (event) => {
-    if(event.target.classList.contains('book-button')) {
-        const room = parseInt(event.target.dataset.roomnum);
-        addBooking(hotel.currentUser.id, datepicker.getDate('yyyy/mm/dd'), room).then(() => {
-            showBookingsView();
-        });
-    }
-})
+  if(event.target.classList.contains('book-button')) {
+    const room = parseInt(event.target.dataset.roomnum);
+    addBooking(hotel.currentUser.id, datepicker.getDate('yyyy/mm/dd'), room).then(() => {
+      showBookingsView();
+    });
+  }
+});
 
 logoutButton.addEventListener('click', () => {
   hide(mainSection);
   hide(userInfo);
   show(loginSection);
-  hotel = null;
+  manager = false;
 });
 
 const setupHotel = () => {
   Promise.all([getData('customers'), getData('rooms'), getData('bookings')])
     .then(data => {
-        hotel = new Hotel(data[0].customers, data[1].rooms, data[2].bookings);
-        managerLogin();
-        //sucessfulLogin(22);
+      hotel = new Hotel(data[0].customers, data[1].rooms, data[2].bookings);
+      managerLogin();
+      //sucessfulLogin(22);
     });
 }
 
@@ -114,11 +118,18 @@ const managerLogin = () => {
   manager = true;
   hotel.setUser('manager');
   newBookingButton.disabled = true;
+  percentFullPie = new CircleProgress('.percent-full-pie', {
+    value: 0,
+    max: hotel.rooms.length,
+    textFormat: 'percent'
+  });
+  bookingsList.innerHTML = '<p class="notify-text">Please select a customer to manage bookings.</p>';
   hide(loginSection);
   populateCustomerSearch();
-  show(statsManager);
+  updateManagerStats();
+  show(managerStatsSection);
   show(customerSelection);
-  hide(statsCustomer);
+  hide(customerStatsSection);
   showMain();
 }
 
@@ -128,8 +139,8 @@ const sucessfulLogin = (id) => {
         hotel.setUser(data);
         showBookingsList();
         updateRoomTotal();
-        hide(statsManager);
-        show(statsCustomer);
+        hide(managerStatsSection);
+        show(customerStatsSection);
         showMain();
     });
 }
@@ -169,6 +180,7 @@ const showBookingsView = () => {
     .then(data => {
         hotel.setRooms(data[0].rooms);
         hotel.setBookings(data[1].bookings);
+        if(manager) updateManagerStats();
         hide(newBookingToolbar);
         show(newBookingButton);
         hide(newBookingCancel);
@@ -266,6 +278,13 @@ const populateCustomerSearch = () => {
     events: { afterChange: managerCustomerSelected },
     data: hotel.users.map(user => ({text: user.name, value: user.id}))
   });
+}
+
+const updateManagerStats = () => {
+  const today = hotel.getStatsForDate(moment().format('YYYY/MM/DD'));
+  percentFullPie.value = today.roomsBooked;
+  todaysRevenue.innerText = `$${today.revenue}`;
+  roomsAvailable.innerText = today.roomsAvailable;
 }
 
 const show = (element) => {

@@ -64,16 +64,16 @@ class Hotel {
   }
 
   getRoomTotal() {
-    return this.getBookings().reduce((acc, booking) => {
-        acc += booking.room.costPerNight;
-        return acc;
-    },0).toFixed(2);
+    return this.getBookings().reduce((acc, booking) => acc += booking.room.costPerNight, 0).toFixed(2);
   }
 
-  getTodaysRevenue() {
-    //return this.bookings.filter(booking.date === )
-    let date = new Date()
-    console.log(date.toISOString())
+  getStatsForDate(date) {
+    const todaysBookings = this.bookings.filter(booking => booking.date === date);
+    return {
+      revenue: todaysBookings.reduce((acc, booking) => acc += booking.room.costPerNight, 0).toFixed(2),
+      roomsAvailable: this.getAvailableRooms(date).length,
+      roomsBooked: this.rooms.length - this.getAvailableRooms(date).length
+    }
   }
 }
 

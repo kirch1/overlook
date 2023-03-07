@@ -31,6 +31,8 @@
     "lint": "./node_modules/.bin/eslint 'src/**.js' 'test/**.js'"
   },
   "dependencies": {
+    "js-circle-progress": "^0.2.4",
+    "moment": "^2.29.4",
     "slim-select": "^2.3.3"
   }
 }
