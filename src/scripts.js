@@ -278,6 +278,7 @@ const clearFilters = () => {
 
 const populateCustomerSearch = () => {
   ssCustomers.setData(hotel.users.map(user => ({text: user.name, value: user.id})));
+  ssCustomers.setSelected([]);
 }
 
 const updateManagerStats = () => {
@@ -296,10 +297,10 @@ const hide = (element) => {
 }
 
 function setupSSColors() {
-  document.documentElement.style.setProperty('--ss-primary-color', '#C9C19F');
-  document.documentElement.style.setProperty('--ss-bg-color', '#6d3518');
-  document.documentElement.style.setProperty('--ss-font-color', '#C9C19F');
-  document.documentElement.style.setProperty('--ss-font-placeholder-color', '#C9C19F');
+  document.documentElement.style.setProperty('--ss-primary-color', '#6d3518');
+  document.documentElement.style.setProperty('--ss-bg-color', '#C9C19F');
+  document.documentElement.style.setProperty('--ss-font-color', '#6d3518');
+  document.documentElement.style.setProperty('--ss-font-placeholder-color', '#6d3518');
   document.documentElement.style.setProperty('--ss-border-color', 'transparent');
   document.documentElement.style.setProperty('--ss-disabled-color', '#C9C19F99');
   document.querySelectorAll('.ss-list')[0].ariaLabel = "Select room type filter";
