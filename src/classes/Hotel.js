@@ -12,7 +12,7 @@ class Hotel {
   }
 
   authenticate(username, password) {
-    if(username === 'manager') {
+    if(username === 'manager' && password === 'overlook2021') {
       return 'manager';
     }else {
       const id = username.replace('customer', '');
